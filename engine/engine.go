@@ -2,7 +2,7 @@ package engine
 
 import (
 
-	fetcher2 "awesomeProject/crawler2/fetcher"
+	fetcher2 "crawler/fetcher"
 	"log"
 )
 

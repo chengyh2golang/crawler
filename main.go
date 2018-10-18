@@ -1,8 +1,8 @@
 package main
 
 import (
-	"awesomeProject/crawler2/engine"
-	"awesomeProject/crawler2/zhenai/parser"
+	"crawler/engine"
+	"crawler/zhenai/parser"
 )
 
 func main() {
