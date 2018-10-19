@@ -20,12 +20,14 @@ func ParserCity(contens []byte)  engine.ParserResult {
 	result := engine.ParserResult{}
 	for _,m := range matches {
 
-		result.Items = append(result.Items,strings.TrimSpace(string(m[2])))
+		name:= strings.TrimSpace(string(m[2]))
+
+		result.Items = append(result.Items,name)
 		//fmt.Println("http://www."+string(m[1]))
 		result.Requests = append(result.Requests, engine.Request{
 			Url:"http://album." + string(m[1]),
 			ParserFunc: func(c []byte) engine.ParserResult {
-				return ParseProfile(c,string(m[2]))
+				return ParseProfile(c,name)
 				},
 		})
 
