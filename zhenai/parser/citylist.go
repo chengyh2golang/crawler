@@ -20,7 +20,7 @@ func ParserCityList(contens []byte)  engine.ParserResult {
 
 		result.Items = append(result.Items,string(m[2]))
 		//fmt.Println("http://www."+string(m[1]))
-		result.Requests = append(result.Requests, engine.Request{Url:"http://www." + string(m[1]),ParserFunc:engine.NilParser})
+		result.Requests = append(result.Requests, engine.Request{Url:"http://m." + string(m[1]),ParserFunc:ParserCity})
 
 	}
 	//fmt.Println(len(matches))
