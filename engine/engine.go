@@ -1,7 +1,6 @@
 package engine
 
 import (
-
 	fetcher2 "crawler/fetcher"
 	"log"
 )
@@ -12,9 +11,9 @@ func Run(seeds ...Request) {
 	var requests []Request
 
 	//将seed存入队列
-	for _,seed := range seeds {
+	for _, seed := range seeds {
 
-		requests = append(requests,seed)
+		requests = append(requests, seed)
 	}
 
 	//队列中有任务就做事情
@@ -24,32 +23,36 @@ func Run(seeds ...Request) {
 		r := requests[0]
 		requests = requests[1:]
 
-		//打印这个任务要爬取的url
-		log.Printf("fetching url : %s",r.Url)
-
-		//将url传入fetch中获得网页的body
-		body, err := fetcher2.Fetcher(r.Url)
-
-
-		//如果获取当前网页body有错，打印信息后继续下一次循环
+		parseResult, err := Worker(r)
 		if err != nil {
-			log.Printf("fetch err from :%s %v",r.Url,err)
 			continue
 		}
 
-		//将拿到的body传入这个request的ParserFunc
-		parseResult := r.ParserFunc(body)
-
 		//将ParserFunc返回的request信息再加入到任务队列中
-		requests = append(requests,parseResult.Requests...)
+		requests = append(requests, parseResult.Requests...)
 
 		//将ParserFunc返回的item信息打印出来
-		for _,item := range parseResult.Items {
-			log.Printf("got item %v",item)
+		for _, item := range parseResult.Items {
+			log.Printf("got item %v", item)
 		}
 
 	}
 
+}
 
+func Worker(r Request) (ParserResult, error) {
+	//打印这个任务要爬取的url
+	log.Printf("fetching url : %s", r.Url)
 
+	//将url传入fetch中获得网页的body
+	body, err := fetcher2.Fetcher(r.Url)
+
+	//如果获取当前网页body有错，打印信息后继续下一次循环
+	if err != nil {
+		log.Printf("fetch err from :%s %v", r.Url, err)
+		return ParserResult{}, err
+	}
+
+	//将拿到的body传入这个request的ParserFunc
+	 return  r.ParserFunc(body),nil
 }
