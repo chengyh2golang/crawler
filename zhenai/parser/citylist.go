@@ -16,15 +16,15 @@ func ParserCityList(contens []byte)  engine.ParserResult {
 	matches := re.FindAllSubmatch(contens, -1)
 
 	result := engine.ParserResult{}
-	limit := 10
+	//limit := 10
 	for _,m := range matches {
 
 		result.Items = append(result.Items,string(m[2]))
 		//fmt.Println("http://www."+string(m[1]))
 		result.Requests = append(result.Requests,
 			engine.Request{Url:"http://m." + string(m[1]),ParserFunc:ParserCity})
-		limit--
-		if limit ==0 {break}
+		//limit--
+		//if limit ==0 {break}
 
 	}
 	//fmt.Println(len(matches))
