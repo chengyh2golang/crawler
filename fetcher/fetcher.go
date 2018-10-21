@@ -11,6 +11,7 @@ import (
 
 	"golang.org/x/text/encoding/unicode"
 	"log"
+	"time"
 )
 
 func DeterminEncoding(r *bufio.Reader) encoding.Encoding{
@@ -24,9 +25,9 @@ func DeterminEncoding(r *bufio.Reader) encoding.Encoding{
 	e, _, _ := charset.DetermineEncoding(bytes, "")
 	return  e
 }
-
+var RateLimiter= time.Tick(100 * time.Millisecond)
 func Fetcher(url string) ([]byte,error){
-
+	<- RateLimiter
 	//resp, err := http.Get(url)
 	request, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {

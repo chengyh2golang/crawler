@@ -35,8 +35,6 @@ func (e ConcurrentEngine)Run(seeds ...Request) {
 			e.Scheduler.Submit(request)
 		}
 	}
-
-
 }
 
 func createWorker(in chan Request,out chan ParserResult) {
